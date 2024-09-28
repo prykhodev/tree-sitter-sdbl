@@ -1,0 +1,17 @@
+============================================================
+Cyrilic characters inside identifiers
+============================================================
+
+ВЫБРАТЬ "1" КАК АаВвЭэЁёІіЇїҐґЩщЄєFfAaZz;
+
+------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))))))

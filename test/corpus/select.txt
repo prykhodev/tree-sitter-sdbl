@@ -1,0 +1,113 @@
+============================================================
+Select 1
+============================================================
+
+SELECT 1;
+
+------------------------------
+
+(program
+    (statement
+        (select
+            (keyword_select)
+            (select_expression
+                (term
+                    (literal))))))
+
+============================================================
+Select aliased literals
+============================================================
+
+SELECT "1" AS _1,
+    2 AS _2,
+    TRUE КАК _3,
+    NULL as _4;
+
+------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal
+            (keyword_true))
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal
+            (keyword_null))
+          (keyword_as)
+          alias: (identifier))))))
+
+============================================================
+Select distinct allowed top
+============================================================
+
+SELECT DISTINCT ALLOWED TOP 1 1;
+
+------------------------------
+
+(program
+    (statement
+        (select
+            (keyword_select)
+            (keyword_distinct)
+            (keyword_allowed)
+            (top_statement
+                (keyword_top)
+                (natural_number))
+            (select_expression
+                (term
+                    (literal))))))
+
+============================================================
+Select top allowed distinct
+============================================================
+
+SELECT TOP 1 ALLOWED DISTINCT 1;
+
+------------------------------
+
+(program
+    (statement
+        (select
+            (keyword_select)
+            (top_statement
+                (keyword_top)
+                (natural_number))
+            (keyword_allowed)
+            (keyword_distinct)
+            (select_expression
+                (term
+                    (literal))))))
+
+===============================================================================
+Simple select
+================================================================================
+
+SELECT * FROM my_table;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          (identifier))))))

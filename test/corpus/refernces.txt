@@ -1,0 +1,33 @@
+================================================================================
+Everything from reference
+================================================================================
+
+SELECT m.*
+FROM my_table AS m;
+
+--------------------------------------------------------------------------------
+
+(program
+      (statement
+        (select
+          (keyword_select)
+          (ERROR
+            (identifier))
+          (select_expression
+            (term
+              value: (all_fields))))
+        (from
+          (keyword_from)
+          (relation
+            (object_reference
+              (identifier))
+            (keyword_as)
+            alias: (identifier)))))
+              name: (identifier))
+            alias: (identifier))
+          (where
+            (keyword_where)
+            predicate: (field
+              (object_reference
+                name: (identifier))
+              name: (identifier))))))

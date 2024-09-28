@@ -1,0 +1,93 @@
+================================================================================
+decimal number
+================================================================================
+
+SELECT 1.0;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          (literal))))))
+
+================================================================================
+negative number
+================================================================================
+
+SELECT -1;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          (literal))))))
+
+================================================================================
+multi line string
+================================================================================
+
+SELECT
+"hello
+world";
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          (literal))))))
+
+============================================================
+string with double quote escapes
+============================================================
+
+SELECT
+    """1""" AS _1,
+    "" AS _2,
+    """" AS _3,
+    """""" AS _5,
+    """5" AS _5,
+    "6""" AS _6;
+
+------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))
+        (term
+          value: (literal)
+          (keyword_as)
+          alias: (identifier))))))
