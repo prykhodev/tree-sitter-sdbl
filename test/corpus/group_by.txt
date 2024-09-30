@@ -1,12 +1,10 @@
 ================================================================================
-Group by //TODO correct representation
-:skip
+Group by
 ================================================================================
 
-SELECT other_id, COUNT(my_table.name)
+SELECT *
 FROM my_table
-GROUP BY other_id
-HAVING my_table.other_id > 10;
+GROUP BY other_id;
 
 --------------------------------------------------------------------------------
 
@@ -16,15 +14,7 @@ HAVING my_table.other_id > 10;
       (keyword_select)
       (select_expression
         (term
-          value: (field
-            name: (identifier)))
-        (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))))))
+          value: (all_fields))))
     (from
       (keyword_from)
       (relation
@@ -34,22 +24,16 @@ HAVING my_table.other_id > 10;
         (keyword_group)
         (keyword_by)
         (field
-          name: (identifier))
-        (keyword_having)
-        (binary_expression
-          left: (field
-            name: (identifier))
-          right: (literal))))))
+          name: (identifier))))))
 
 ================================================================================
 Group by numbered alias
-:skip
 ================================================================================
 
-SELECT other_id, COUNT(name)
+SELECT *
 FROM my_table
-GROUP BY 1
-HAVING other_id > 10;
+GROUP BY 1;
+
 --------------------------------------------------------------------------------
 
 (program
@@ -58,15 +42,7 @@ HAVING other_id > 10;
       (keyword_select)
       (select_expression
         (term
-          value: (field
-            name: (identifier)))
-        (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))))))
+          value: (all_fields))))
     (from
       (keyword_from)
       (relation
@@ -75,22 +51,16 @@ HAVING other_id > 10;
       (group_by
         (keyword_group)
         (keyword_by)
-        (literal)
-        (keyword_having)
-        (binary_expression
-          left: (field
-            name: (identifier))
-          right: (literal))))))
+        (literal)))))
 
 ================================================================================
 Group by with mixed list
-:skip
 ================================================================================
 
-SELECT other_id, other_col, COUNT(name)
+SELECT *
 FROM my_table
-GROUP BY 1, other_col
-HAVING other_id > 10;
+GROUP BY 1, other_col;
+
 --------------------------------------------------------------------------------
 
 (program
@@ -99,18 +69,7 @@ HAVING other_id > 10;
       (keyword_select)
       (select_expression
         (term
-          value: (field
-            name: (identifier)))
-        (term
-          value: (field
-            name: (identifier)))
-        (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))))))
+          value: (all_fields))))
     (from
       (keyword_from)
       (relation
@@ -121,22 +80,16 @@ HAVING other_id > 10;
         (keyword_by)
         (literal)
         (field
-          name: (identifier))
-        (keyword_having)
-        (binary_expression
-          left: (field
-            name: (identifier))
-          right: (literal))))))
+          name: (identifier))))))
 
 ================================================================================
-Having with count function
-:skip
+Group by with single grouping set
 ================================================================================
 
-SELECT other_id, COUNT(name)
-FROM my_table
-GROUP BY other_id
-HAVING COUNT(*) = 2;
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+    (table.a)
 
 --------------------------------------------------------------------------------
 
@@ -146,15 +99,233 @@ HAVING COUNT(*) = 2;
       (keyword_select)
       (select_expression
         (term
-          value: (field
-            name: (identifier)))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets
+          (grouping_set
+            (field
+              (object_reference
+                name: (identifier))
+              name: (identifier))))))))
+
+================================================================================
+Group by with mutltiple grouping sets
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+(
+    (table.a),
+    (table.c)
+)
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
         (term
-          value: (invocation
-            (object_reference
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets
+          (grouping_set
+            (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier)))
+          (grouping_set
+            (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier))))))))
+
+================================================================================
+Group by with mutltiple groups in grouping sets
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+(
+    (table.a, table.b),
+    (table.c, table.d)
+)
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets
+          (grouping_set
+            (field
+              (object_reference
+                name: (identifier))
               name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))))))
+            (field
+              (object_reference
+                name: (identifier))
+              name: (identifier)))
+          (grouping_set
+            (field
+              (object_reference
+                name: (identifier))
+              name: (identifier))
+            (field
+              (object_reference
+                name: (identifier))
+              name: (identifier))))))))
+
+================================================================================
+Group by with empty grouping sets
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+((),())
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets)))))
+
+================================================================================
+Group by with mixed grouping sets
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+((),(1),(),(2))
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets
+          (grouping_set
+              (literal))
+          (grouping_set
+              (literal)))))))
+
+================================================================================
+Group by with subquery should give error
+:skip
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY
+(SELECT 1)
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (parenthesized_expression
+          (field
+            name: (identifier))
+          (ERROR))))))
+
+================================================================================
+Group by with invocation should give error
+:skip
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY
+x.b()
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
     (from
       (keyword_from)
       (relation
@@ -164,12 +335,8 @@ HAVING COUNT(*) = 2;
         (keyword_group)
         (keyword_by)
         (field
-          name: (identifier))
-        (keyword_having)
-        (binary_expression
-          left: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (all_fields)))
-          right: (literal))))))
+          (object_reference
+            name: (identifier))
+          (object_reference
+            name: (identifier)))
+        (ERROR)))))

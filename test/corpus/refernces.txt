@@ -1,4 +1,31 @@
 ================================================================================
+Simple reference
+================================================================================
+
+SELECT m.x
+FROM my_table AS m;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        (keyword_as)
+        alias: (identifier)))))
+
+================================================================================
 Everything from reference
 ================================================================================
 
@@ -8,26 +35,84 @@ FROM my_table AS m;
 --------------------------------------------------------------------------------
 
 (program
-      (statement
-        (select
-          (keyword_select)
-          (ERROR
-            (identifier))
-          (select_expression
-            (term
-              value: (all_fields))))
-        (from
-          (keyword_from)
-          (relation
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields
             (object_reference
-              (identifier))
-            (keyword_as)
-            alias: (identifier)))))
-              name: (identifier))
-            alias: (identifier))
-          (where
-            (keyword_where)
-            predicate: (field
-              (object_reference
-                name: (identifier))
               name: (identifier))))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        (keyword_as)
+        alias: (identifier)))))
+
+================================================================================
+Multiple references
+================================================================================
+
+SELECT m.a, m.b, m.c
+FROM my_table AS m;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        (keyword_as)
+        alias: (identifier)))))
+
+================================================================================
+Reference of reference
+================================================================================
+
+SELECT m.x.y
+FROM my_table AS m;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        (keyword_as)
+        alias: (identifier)))))

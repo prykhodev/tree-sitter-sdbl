@@ -1,9 +1,9 @@
 ================================================================================
-Simple cast
+Simple from invocation
 ================================================================================
 
-SELECT
-    CAST(1 AS BOOLEAN);
+SELECT *
+FROM my_table();
 
 --------------------------------------------------------------------------------
 
@@ -13,18 +13,22 @@ SELECT
       (keyword_select)
       (select_expression
         (term
-          (cast
-            (keyword_cast)
-            (literal)
-            (keyword_as)
-            (keyword_boolean)))))))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (invocation
+          (object_reference
+            name: (identifier)))))))
 
 ================================================================================
-Cast without optional parameters
+From invocation with multiple empty parameters
 ================================================================================
 
-SELECT
-    CAST(1 AS STRING);
+SELECT *
+FROM my_table(, ,
+,
+);
 
 --------------------------------------------------------------------------------
 
@@ -34,18 +38,20 @@ SELECT
       (keyword_select)
       (select_expression
         (term
-          (cast
-            (keyword_cast)
-            (literal)
-            (keyword_as)
-            (string
-              (keyword_string))))))))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (invocation
+          (object_reference
+            name: (identifier)))))))
 
 ================================================================================
-Aliased
+From invocation with parameter
 ================================================================================
 
-SELECT CAST(1 AS STRING) AS fieldname;
+SELECT *
+FROM my_table(&p1);
 
 --------------------------------------------------------------------------------
 
@@ -55,21 +61,22 @@ SELECT CAST(1 AS STRING) AS fieldname;
       (keyword_select)
       (select_expression
         (term
-          value: (cast
-            name: (keyword_cast)
-            parameter: (literal)
-            (keyword_as)
-            (string
-              (keyword_string)))
-          (keyword_as)
-          alias: (identifier))))))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (invocation
+          (object_reference
+            name: (identifier))
+          parameter: (term
+            value: (parameter)))))))
 
 ================================================================================
-Cast with parameter
+From invocation with multiple parameters
 ================================================================================
 
-SELECT
-CAST(100 AS NUMBER(1));
+SELECT *
+FROM my_table(&p1, &p2);
 
 --------------------------------------------------------------------------------
 
@@ -79,20 +86,24 @@ CAST(100 AS NUMBER(1));
       (keyword_select)
       (select_expression
         (term
-          value: (cast
-            name: (keyword_cast)
-            parameter: (literal)
-            (keyword_as)
-            (number
-              (keyword_number)
-              size: (literal))))))))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (invocation
+          (object_reference
+            name: (identifier))
+          parameter: (term
+            value: (parameter))
+          parameter: (term
+            value: (parameter)))))))
 
 ================================================================================
-Cast with multiple parameters
+From invocation with omitted parameter,
 ================================================================================
 
-SELECT
-CAST(100 AS NUMBER(10, 2));
+SELECT *
+FROM my_table(, &p1,, &p2);
 
 --------------------------------------------------------------------------------
 
@@ -102,11 +113,14 @@ CAST(100 AS NUMBER(10, 2));
       (keyword_select)
       (select_expression
         (term
-          value: (cast
-            name: (keyword_cast)
-            parameter: (literal)
-            (keyword_as)
-            (number
-              (keyword_number)
-              size: (literal)
-              precision: (literal))))))))
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (invocation
+          (object_reference
+            name: (identifier))
+          parameter: (term
+            value: (parameter))
+          parameter: (term
+            value: (parameter)))))))

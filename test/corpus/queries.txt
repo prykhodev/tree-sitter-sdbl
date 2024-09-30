@@ -1,0 +1,116 @@
+================================================================================
+Can parse subquery
+================================================================================
+
+SELECT * FROM (SELECT 1) a;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (subquery
+          (select
+            (keyword_select)
+            (select_expression
+              (term
+                value: (literal)))))
+        alias: (identifier)))))
+
+================================================================================
+Union
+:skip
+================================================================================
+
+SELECT 1 UNION ALL SELECT 2;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (set_operation
+      (select
+        (keyword_select)
+        (select_expression
+          (term
+            value: (literal))))
+      operation: (keyword_union)
+      operation: (keyword_all)
+      (select
+        (keyword_select)
+        (select_expression
+          (term
+
+================================================================================
+SELECT FROM SUBQUERY WITH UNION
+:skip
+================================================================================
+
+SELECT
+a1.*
+FROM (
+  SELECT 1 FROM tb01
+  UNION ALL
+  SELECT 2 FROM tb01
+) a1;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          (all_fields
+            (object_reference
+              (identifier))))))
+    (from
+      (keyword_from)
+      (relation
+        (subquery
+          (set_operation
+            (select
+              (keyword_select)
+              (select_expression
+                (term
+                  (literal))))
+            (from
+              (keyword_from)
+              (relation
+                (object_reference
+                  (identifier))))
+            (keyword_union)
+            (keyword_all)
+            (select
+              (keyword_select)
+              (select_expression
+                (term
+                  (literal))))
+            (from
+              (keyword_from)
+              (relation
+                (object_reference
+                  (identifier))))))
+        (identifier)))))           value: (literal)))))))
+
+================================================================================
+Simple drop
+================================================================================
+
+Drop table;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (drop
+      (keyword_drop)
+      (identifier))))

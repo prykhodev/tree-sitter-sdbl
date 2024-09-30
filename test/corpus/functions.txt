@@ -1,9 +1,10 @@
 ================================================================================
-Functions
+Simple function
 ================================================================================
 
-SELECT MAX(id)
+SELECT MAX(my_table.id)
 FROM my_table;
+
 --------------------------------------------------------------------------------
 
 (program
@@ -12,12 +13,12 @@ FROM my_table;
       (keyword_select)
       (select_expression
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))))))
+          value: (function_invocation
+            name: (keyword_max)
+            expression: (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier))))))
     (from
       (keyword_from)
       (relation
@@ -28,8 +29,7 @@ FROM my_table;
 No-arg functions
 ================================================================================
 
-SELECT АВТОНОМЕРЗАПИСИ()
-INTO temp;
+SELECT RECORDAUTONUMBER() INTO _;
 --------------------------------------------------------------------------------
 
 (program
@@ -38,12 +38,11 @@ INTO temp;
       (keyword_select)
       (select_expression
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))))))
+          value: (function_invocation
+            name: (keyword_recordautonumber)))))
     (into
       (keyword_into)
-      (identifier)))))
+      name: (identifier))))
 
 ================================================================================
 More complex function arguments
@@ -51,8 +50,7 @@ More complex function arguments
 
 SELECT
   user_id,
-  user_defined_func(user_id, 123, other_func(user_id, 321), user_id + 1 > 5) as something,
-  regexp_replace(t.username, "^(.)[^@]+", "\1--", "g") as username,
+  DATETIME(1998, 12, 10, &a, &b, &c) as bday,
   created_at
 FROM my_table AS t;
 --------------------------------------------------------------------------------
@@ -66,47 +64,14 @@ FROM my_table AS t;
           value: (field
             name: (identifier)))
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                name: (identifier)))
-            parameter: (term
-              value: (literal))
-            parameter: (term
-              value: (invocation
-                (object_reference
-                  name: (identifier))
-                parameter: (term
-                  value: (field
-                    name: (identifier)))
-                parameter: (term
-                  value: (literal))))
-            parameter: (term
-              value: (binary_expression
-                left: (binary_expression
-                  left: (field
-                    name: (identifier))
-                  right: (literal))
-                right: (literal))))
-          (keyword_as)
-          alias: (identifier))
-        (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
-            parameter: (term
-              value: (field
-                (object_reference
-                  name: (identifier))
-                name: (identifier)))
-            parameter: (term
-              value: (literal))
-            parameter: (term
-              value: (literal))
-            parameter: (term
-              value: (literal)))
+          value: (function_invocation
+            name: (keyword_datetime)
+            year: (literal)
+            month: (literal)
+            day: (literal)
+            hour: (parameter)
+            minute: (parameter)
+            second: (parameter))
           (keyword_as)
           alias: (identifier))
         (term
@@ -119,46 +84,3 @@ FROM my_table AS t;
           name: (identifier))
         (keyword_as)
         alias: (identifier)))))
-
-================================================================================
-In with subquery
-================================================================================
-
-SELECT *
-FROM foo
-WHERE id IN (
-  SELECT 1
-  FROM bar
-)
-
---------------------------------------------------------------------------------
-
-(program
-  (statement
-    (select
-      (keyword_select)
-      (select_expression
-        (term
-          value: (all_fields))))
-    (from
-      (keyword_from)
-      (relation
-        (object_reference
-          name: (identifier)))
-      (where
-        (keyword_where)
-        predicate: (binary_expression
-          left: (field
-            name: (identifier))
-          operator: (keyword_in)
-          right: (subquery
-            (select
-              (keyword_select)
-              (select_expression
-                (term
-                  value: (literal))))
-            (from
-              (keyword_from)
-              (relation
-                (object_reference
-                  name: (identifier))))))))))
