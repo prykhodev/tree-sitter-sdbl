@@ -4,8 +4,8 @@
 
 ### TODO
 
-- [ ] Add HAVING statement
-  - [ ] Add tests
+- [x] Add HAVING statement
+    - [x] Add tests
 - [ ] Add UNION statement
 - [ ] Add tests for multiple queries
 - [ ] Add highlights

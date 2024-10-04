@@ -70,21 +70,18 @@ module.exports = grammar({
       $.select_expression,
     ),
 
-    select_expression: $ => seq(
-      optional(
-        any_order(
-          optional($.keyword_distinct),
-          optional($.keyword_allowed),
-          optional($.top_statement),
-        )
-      ),
-      $.term,
-      repeat(
-        seq(
-          ',',
-          $.term,
+    select_expression: $ => comma_list(
+      seq(
+        optional(
+          any_order(
+            optional($.keyword_distinct),
+            optional($.keyword_allowed),
+            optional($.top_statement),
+          )
         ),
+        $.term,
       ),
+      true
     ),
 
 
@@ -120,7 +117,8 @@ module.exports = grammar({
           $.grouping_sets
         ),
         comma_list($._expression, true),
-      )
+      ),
+      optional($._having),
     ),
 
     grouping_sets: $ => wrapped_in_parenthesis(
@@ -136,6 +134,11 @@ module.exports = grammar({
       optional_parenthesis(
         comma_list($._expression, true)
       )
+    ),
+
+    _having: $ => seq(
+      $.keyword_having,
+      $._expression,
     ),
 
     totals: _ => 'TODO totals',
@@ -397,12 +400,12 @@ module.exports = grammar({
     ),
 
     count: $ => seq(
-      field('name', $.keyword_count),
+      $.keyword_count,
       wrapped_in_parenthesis(
         seq(
           optional($.keyword_distinct),
           optional_parenthesis(
-            field('expression', $.term),
+            field('parameter', $.term),
           )
         )
       ),
