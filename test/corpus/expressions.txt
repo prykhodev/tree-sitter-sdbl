@@ -830,8 +830,8 @@ FROM my_table;
   (statement
     (select
       (keyword_select)
-      (keyword_distinct)
       (select_expression
+        (keyword_distinct)
         (term
           value: (parenthesized_expression
             (field
@@ -854,8 +854,8 @@ FROM my_table;
   (statement
     (select
       (keyword_select)
-      (keyword_distinct)
       (select_expression
+        (keyword_distinct)
         (term
           value: (field
             name: (identifier)))))
@@ -879,9 +879,8 @@ FROM my_table;
       (keyword_select)
       (select_expression
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
+          value: (count
+            (keyword_count)
             (keyword_distinct)
             parameter: (term
               value: (parenthesized_expression
@@ -907,9 +906,8 @@ FROM my_table;
       (keyword_select)
       (select_expression
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
+          value: (count
+            (keyword_count)
             parameter: (term
               value: (all_fields))))))
     (from
@@ -932,9 +930,8 @@ FROM my_table;
       (keyword_select)
       (select_expression
         (term
-          value: (invocation
-            (object_reference
-              name: (identifier))
+          value: (count
+            (keyword_count)
             (keyword_distinct)
             parameter: (term
               value: (field

@@ -4,7 +4,8 @@ Group by
 
 SELECT *
 FROM my_table
-GROUP BY other_id;
+GROUP BY other_id
+HAVING other_id > 10;
 
 --------------------------------------------------------------------------------
 
@@ -24,7 +25,12 @@ GROUP BY other_id;
         (keyword_group)
         (keyword_by)
         (field
-          name: (identifier))))))
+          name: (identifier))
+        (keyword_having)
+        (binary_expression
+          left: (field
+            name: (identifier))
+          right: (literal))))))
 
 ================================================================================
 Group by numbered alias
@@ -32,7 +38,8 @@ Group by numbered alias
 
 SELECT *
 FROM my_table
-GROUP BY 1;
+GROUP BY 1
+HAVING other_id > 10;
 
 --------------------------------------------------------------------------------
 
@@ -51,7 +58,12 @@ GROUP BY 1;
       (group_by
         (keyword_group)
         (keyword_by)
-        (literal)))))
+        (literal)
+        (keyword_having)
+        (binary_expression
+          left: (field
+            name: (identifier))
+          right: (literal))))))
 
 ================================================================================
 Group by with mixed list
@@ -59,7 +71,8 @@ Group by with mixed list
 
 SELECT *
 FROM my_table
-GROUP BY 1, other_col;
+GROUP BY 1, other_col
+HAVING other_id > 10;
 
 --------------------------------------------------------------------------------
 
@@ -80,7 +93,55 @@ GROUP BY 1, other_col;
         (keyword_by)
         (literal)
         (field
-          name: (identifier))))))
+          name: (identifier))
+        (keyword_having)
+        (binary_expression
+          left: (field
+            name: (identifier))
+          right: (literal))))))
+
+================================================================================
+Having with count function
+================================================================================
+
+SELECT other_id, COUNT(name)
+FROM my_table
+GROUP BY other_id
+HAVING COUNT(*) = 2;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (field
+            name: (identifier)))
+        (term
+          value: (count
+            (keyword_count)
+            parameter: (term
+              value: (field
+                name: (identifier)))))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (field
+          name: (identifier))
+        (keyword_having)
+        (binary_expression
+          left: (count
+            (keyword_count)
+            parameter: (term
+              value: (all_fields)))
+          right: (literal))))))
 
 ================================================================================
 Group by with single grouping set
@@ -274,6 +335,53 @@ GROUP BY GROUPING SETS
               (literal))
           (grouping_set
               (literal)))))))
+
+================================================================================
+Group by with grouping sets and having
+================================================================================
+
+SELECT * FROM
+   table
+GROUP BY GROUPING SETS
+(
+    (table.a),
+    (table.c)
+)
+HAVING FALSE
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))
+      (group_by
+        (keyword_group)
+        (keyword_by)
+        (keyword_grouping)
+        (keyword_sets)
+        (grouping_sets
+          (grouping_set
+            (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier)))
+          (grouping_set
+            (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier))))
+        (keyword_having)
+        (literal
+          (keyword_false))))))
 
 ================================================================================
 Group by with subquery should give error

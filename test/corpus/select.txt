@@ -7,12 +7,12 @@ SELECT 1;
 ------------------------------
 
 (program
-    (statement
-        (select
-            (keyword_select)
-            (select_expression
-                (term
-                    (literal))))))
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          (literal))))))
 
 ============================================================
 Select aliased literals
@@ -58,17 +58,17 @@ SELECT DISTINCT ALLOWED TOP 1 1;
 ------------------------------
 
 (program
-    (statement
-        (select
-            (keyword_select)
-            (keyword_distinct)
-            (keyword_allowed)
-            (top_statement
-                (keyword_top)
-                (natural_number))
-            (select_expression
-                (term
-                    (literal))))))
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (keyword_distinct)
+        (keyword_allowed)
+        (top_statement
+          (keyword_top)
+          (natural_number))
+          (term
+            (literal))))))
 
 ============================================================
 Select top allowed distinct
@@ -79,17 +79,17 @@ SELECT TOP 1 ALLOWED DISTINCT 1;
 ------------------------------
 
 (program
-    (statement
-        (select
-            (keyword_select)
-            (top_statement
-                (keyword_top)
-                (natural_number))
-            (keyword_allowed)
-            (keyword_distinct)
-            (select_expression
-                (term
-                    (literal))))))
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (top_statement
+          (keyword_top)
+          (natural_number))
+        (keyword_allowed)
+        (keyword_distinct)
+          (term
+            (literal))))))
 
 ============================================================
 More complex top allowed distinct
@@ -97,27 +97,39 @@ More complex top allowed distinct
 
 SELECT
     0,
-	DIFFERENT TOP 10 1 a,
-	DIFFERENT ALLOWED("2"),
-	ALLOWED DIFFERENT(NULL) КАК c
+	DISTINCT TOP 10 1 a,
+	DISTINCT ALLOWED("2"),
+	ALLOWED DISTINCT(NULL) AS c
 
 ------------------------------
 
 (program
-    (statement
-        (select
-          (select_expression
-            (term
-              (literal))
-            (keyword_select)
-            (top_statement
-                (keyword_top)
-                (natural_number))
-            (keyword_allowed)
-            (keyword_distinct)
-            (select_expression
-                (term
-                    (literal))))))
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal))
+        (keyword_distinct)
+        (top_statement
+          (keyword_top)
+          (natural_number))
+        (term
+          value: (literal)
+          alias: (identifier))
+        (keyword_distinct)
+        (keyword_allowed)
+        (term
+          value: (parenthesized_expression
+            (literal)))
+        (keyword_allowed)
+        (keyword_distinct)
+        (term
+          value: (parenthesized_expression
+            (literal
+              (keyword_null)))
+          (keyword_as)
+          alias: (identifier))))))
 
 ===============================================================================
 Simple select
