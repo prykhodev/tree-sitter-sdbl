@@ -1131,3 +1131,50 @@ WHERE
               name: (identifier))
             name: (identifier))
           right: (literal))))))
+
+================================================================================
+Select for update
+================================================================================
+
+SELECT
+	*
+FROM
+	Constants
+FOR UPDATE
+	Constants
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))))
+    (for_update
+      (keyword_for)
+      (keyword_update)
+      (object_reference
+          name: (identifier)))))
+
+================================================================================
+Select for update
+================================================================================
+
+SELECT
+	table.x
+FROM
+	Catalog.table table
+TOTALS
+	COUNT(DISTINCT table.x)
+BY
+	OVERALL,
+	table.y
+
+--------------------------------------------------------------------------------

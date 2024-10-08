@@ -26,7 +26,6 @@ SELECT * FROM (SELECT 1) a;
 
 ================================================================================
 Union
-:skip
 ================================================================================
 
 SELECT 1 UNION ALL SELECT 2;
@@ -35,22 +34,22 @@ SELECT 1 UNION ALL SELECT 2;
 
 (program
   (statement
-    (set_operation
-      (select
-        (keyword_select)
-        (select_expression
-          (term
-            value: (literal))))
-      operation: (keyword_union)
-      operation: (keyword_all)
-      (select
-        (keyword_select)
-        (select_expression
-          (term
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal))))
+    (union
+      (keyword_union)
+      (keyword_all))
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal))))))
 
 ================================================================================
 SELECT FROM SUBQUERY WITH UNION
-:skip
 ================================================================================
 
 SELECT
@@ -69,37 +68,37 @@ FROM (
       (keyword_select)
       (select_expression
         (term
-          (all_fields
+          value: (all_fields
             (object_reference
-              (identifier))))))
+              name: (identifier))))))
     (from
       (keyword_from)
       (relation
         (subquery
-          (set_operation
+          (select
+            (keyword_select)
+            (select_expression
+              (term
+                value: (literal))))
+          (from
+            (keyword_from)
+            (relation
+              (object_reference
+                name: (identifier))))
+            (union
+              (keyword_union)
+              (keyword_all))
             (select
               (keyword_select)
               (select_expression
                 (term
-                  (literal))))
+                  value: (literal))))
             (from
               (keyword_from)
               (relation
                 (object_reference
-                  (identifier))))
-            (keyword_union)
-            (keyword_all)
-            (select
-              (keyword_select)
-              (select_expression
-                (term
-                  (literal))))
-            (from
-              (keyword_from)
-              (relation
-                (object_reference
-                  (identifier))))))
-        (identifier)))))           value: (literal)))))))
+                  name: (identifier)))))
+                alias: (identifier)))))
 
 ================================================================================
 Simple drop
@@ -110,6 +109,71 @@ Drop table;
 --------------------------------------------------------------------------------
 
 (program
+  (statement
+    (drop
+      (keyword_drop)
+      (identifier))))
+
+================================================================================
+Simple multiple Queries
+================================================================================
+
+SELECT TRUE; SELECT FALSE;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal
+            (keyword_true))))))
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal
+            (keyword_false)))))))
+
+================================================================================
+Multiple Queries with different statements
+================================================================================
+
+SELECT TRUE INTO table;
+//comment
+SELECT * FROM table;
+//comment
+DROP table;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (literal
+            (keyword_true)))))
+    (into
+      (keyword_into)
+      name: (identifier)))
+  (comment)
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (all_fields))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier)))))
+  (comment)
   (statement
     (drop
       (keyword_drop)
