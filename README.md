@@ -1,3 +1,4 @@
+
 ### Sdbl language (1C:Enterprise query language) grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 
 ### WORK IN PROGRESS
@@ -6,6 +7,11 @@
 
 - [x] Add HAVING statement
     - [x] Add tests
-- [ ] Add UNION statement
-- [ ] Add tests for multiple queries
+- [x] Add UNION statement
+- [x] Add tests for multiple queries
+- [x] Add FOR UPDATE statement
+    - [x] Add tests
+- [ ] Add TOTALS statement
+    - [ ] Add tests
 - [ ] Add highlights
+- [ ] Add tests for Cyrillic queries

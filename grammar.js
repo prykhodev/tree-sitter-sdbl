@@ -50,7 +50,7 @@ module.exports = grammar({
     ),
 
     statement: $ => choice(
-      $._select_statement,
+      $._select_statement_elevated,
       $.drop,
     ),
 
@@ -59,10 +59,41 @@ module.exports = grammar({
       $.identifier
     ),
 
-    _select_statement: $ => seq(
-      $.select,
+    _select_statement_elevated: $ => seq(
+      alias($._select_elevated, $.select),
       optional($.into),
       optional($.from),
+      optional($.for_update),
+      optional(
+        seq(
+          $.union,
+          $._select_statement,
+        )
+      ),
+    ),
+
+    _select_statement: $ => seq(
+      $.select,
+      optional($.from),
+      repeat(
+        seq(
+          $.union,
+          $.select,
+          optional($.from),
+        )
+      ),
+    ),
+
+    union: $ => seq(
+      $.keyword_union,
+      optional(
+        $.keyword_all
+      )
+    ),
+
+    _select_elevated: $ => seq(
+      $.keyword_select,
+      alias($._select_expression_elevated, $.select_expression),
     ),
 
     select: $ => seq(
@@ -70,12 +101,25 @@ module.exports = grammar({
       $.select_expression,
     ),
 
-    select_expression: $ => comma_list(
+    _select_expression_elevated: $ => comma_list(
       seq(
         optional(
           any_order(
             optional($.keyword_distinct),
             optional($.keyword_allowed),
+            optional($.top_statement),
+          )
+        ),
+        $.term,
+      ),
+      true
+    ),
+
+    select_expression: $ => comma_list(
+      seq(
+        optional(
+          any_order(
+            optional($.keyword_distinct),
             optional($.top_statement),
           )
         ),
@@ -99,7 +143,7 @@ module.exports = grammar({
       optional($.where),
       optional($.group_by),
       optional($.order_by),
-      optional($.totals),
+      optional($.totals_expression),
     ),
 
     where: $ => seq(
@@ -141,7 +185,30 @@ module.exports = grammar({
       $._expression,
     ),
 
-    totals: _ => 'TODO totals',
+    for_update: $ => prec(1, seq(
+      $.keyword_for,
+      $.keyword_update,
+      $.object_reference,
+    )),
+
+    totals_expression: $ => seq(
+      $.totals,
+      $.by_statement,
+    ),
+
+    totals: $ => seq(
+      $.keyword_totals,
+      comma_list(
+        choice(
+          $.object_reference,
+          $.count,
+        ),
+        true
+      )
+    ),
+
+    by_statement: $ => seq(
+    ),
 
     join: $ => seq(
       optional(
