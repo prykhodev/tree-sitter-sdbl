@@ -191,23 +191,34 @@ module.exports = grammar({
       $.object_reference,
     )),
 
-    totals_expression: $ => seq(
+    totals_expression: $ => prec(1, seq(
       $.totals,
-      $.by_statement,
-    ),
+      optional(
+        $.by_statement
+      ),
+    )),
 
     totals: $ => seq(
       $.keyword_totals,
       comma_list(
         choice(
-          $.object_reference,
+          $.field,
           $.count,
+          $.function_invocation,
         ),
         true
       )
     ),
 
     by_statement: $ => seq(
+      $.keyword_by,
+      comma_list(
+        choice(
+          $.keyword_overall,
+          $.field,
+        ),
+        true
+      )
     ),
 
     join: $ => seq(
@@ -236,7 +247,12 @@ module.exports = grammar({
         choice(
           $.subquery,
           $.invocation,
-          $.object_reference,
+          seq(
+            repeat(
+              $._object_reference_parent
+            ),
+            $.object_reference,
+          ),
         ),
         optional(
           $._alias,

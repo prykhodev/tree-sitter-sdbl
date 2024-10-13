@@ -313,6 +313,39 @@ FROM my_table m;
         alias: (identifier)))))
 
 ================================================================================
+From multilevel object reference
+================================================================================
+
+SELECT m.id, m.name
+FROM my_table.subtable m;
+
+--------------------------------------------------------------------------------
+
+(program
+  (statement
+    (select
+      (keyword_select)
+      (select_expression
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))
+        (term
+          value: (field
+            (object_reference
+              name: (identifier))
+            name: (identifier)))))
+    (from
+      (keyword_from)
+      (relation
+        (object_reference
+          name: (identifier))
+        (object_reference
+          name: (identifier))
+        alias: (identifier)))))
+
+================================================================================
 Simple select with where
 ================================================================================
 
@@ -1164,7 +1197,7 @@ FOR UPDATE
           name: (identifier)))))
 
 ================================================================================
-Select for update
+Select with totals
 ================================================================================
 
 SELECT
@@ -1178,3 +1211,41 @@ BY
 	table.y
 
 --------------------------------------------------------------------------------
+
+    (program
+      (statement
+        (select
+          (keyword_select)
+          (select_expression
+            (term
+              value: (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier)))))
+        (from
+          (keyword_from)
+          (relation
+            (object_reference
+              name: (identifier))
+            (object_reference
+              name: (identifier))
+        alias: (identifier))
+          (totals_expression
+            (totals
+              (keyword_totals)
+              (count
+                (keyword_count)
+                (keyword_distinct)
+                parameter: (term
+                  value: (field
+                    (object_reference
+                      name: (identifier))
+                    name: (identifier)))))
+            (by_statement
+              (keyword_by)
+              (keyword_overall)
+              (field
+                (object_reference
+                  name: (identifier))
+                name: (identifier)))))))
+
