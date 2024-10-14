@@ -783,6 +783,7 @@ function function_type($, type, params = ['expression']) {
   if (params.length == 0) {
     return (seq(type, '()'))
   }
+  //TODO add function_invocation or rewrite(!) function_invocation completely
   return function_node(type, choice($.literal, $.field, $.parameter), params)
 }
 
