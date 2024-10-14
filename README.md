@@ -5,5 +5,5 @@
 
 ### TODO
 
-- [ ] Add highlights
+- [x] Add highlights
 - [ ] Add tests for Cyrillic queries
