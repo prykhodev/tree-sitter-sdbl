@@ -572,7 +572,7 @@ module.exports = grammar({
     _decimal_number: _ => seq(
       optional(
         choice("-", "+")),
-      /((\d+(_\d+)*)?[.]\d+(_\d+)*(e[+-]?\d+(_\d+)*)?)|(\d+(_\d+)*[.](e[+-]?\d+(_\d+)*)?)/
+      /[+-]?\d*\.?\d+/
     ),
 
     all_fields: $ => seq(
