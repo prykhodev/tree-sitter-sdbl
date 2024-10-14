@@ -1847,6 +1847,11 @@
     "fields": {}
   },
   {
+    "type": "keyword_undefined",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "keyword_union",
     "named": true,
     "fields": {}
@@ -1976,6 +1981,10 @@
         },
         {
           "type": "keyword_true",
+          "named": true
+        },
+        {
+          "type": "keyword_undefined",
           "named": true
         }
       ]

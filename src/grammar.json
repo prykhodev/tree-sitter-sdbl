@@ -5252,6 +5252,10 @@
           {
             "type": "SYMBOL",
             "name": "keyword_null"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keyword_undefined"
           }
         ]
       }
@@ -5311,7 +5315,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "[+-]?\\d*\\.?\\d+"
+          "value": "((\\d+(_\\d+)*)?[.]\\d+(_\\d+)*(e[+-]?\\d+(_\\d+)*)?)|(\\d+(_\\d+)*[.](e[+-]?\\d+(_\\d+)*)?)"
         }
       ]
     },
@@ -5372,6 +5376,283 @@
         }
       ]
     },
+    "keyword_not": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[nN][oO][tT]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[нН][еЕ]"
+        }
+      ]
+    },
+    "keyword_and": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[aA][nN][dD]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[иИ]"
+        }
+      ]
+    },
+    "keyword_or": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[oO][rR]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[иИ][лЛ][иИ]"
+        }
+      ]
+    },
+    "keyword_in": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[iI][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[вВ]"
+        }
+      ]
+    },
+    "keyword_on": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[oO][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[пП][оО]"
+        }
+      ]
+    },
+    "keyword_by": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[bB][yY]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[пП][оО]"
+        }
+      ]
+    },
+    "keyword_union": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[uU][nN][iI][oO][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[оО][бБ][ъЪ][еЕ][дД][иИ][нН][иИ][тТ][ьЬ]"
+        }
+      ]
+    },
+    "keyword_case": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[cC][aA][sS][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[вВ][ыЫ][бБ][оО][рР]"
+        }
+      ]
+    },
+    "keyword_when": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[wW][hH][eE][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[кК][оО][гГ][дД][аА]"
+        }
+      ]
+    },
+    "keyword_then": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[tT][hH][eE][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[тТ][оО][гГ][дД][аА]"
+        }
+      ]
+    },
+    "keyword_else": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[eE][lL][sS][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[иИ][нН][аА][чЧ][еЕ]"
+        }
+      ]
+    },
+    "keyword_asc": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[aA][sS][cC]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[вВ][оО][зЗ][рР]"
+        }
+      ]
+    },
+    "keyword_desc": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[dD][eE][sS][cC]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[уУ][бБ][ыЫ][вВ]"
+        }
+      ]
+    },
+    "keyword_true": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[tT][rR][uU][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[иИ][сС][тТ][иИ][нН][аА]"
+        }
+      ]
+    },
+    "keyword_false": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[fF][aA][lL][sS][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[лЛ][оО][жЖ][ьЬ]"
+        }
+      ]
+    },
+    "keyword_undefined": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[uU][nN][dD][eE][fF][iI][nN][eE][dD]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[нН][еЕ][оО][пП][рР][еЕ][дД][еЕ][лЛ][еЕ][нН][оО]"
+        }
+      ]
+    },
+    "keyword_null": {
+      "type": "PATTERN",
+      "value": "[nN][uU][lL][lL]"
+    },
+    "keyword_number": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[nN][uU][mM][bB][eE][rR]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[чЧ][иИ][сС][лЛ][оО]"
+        }
+      ]
+    },
+    "keyword_string": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[sS][tT][rR][iI][nN][gG]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[сС][тТ][рР][оО][кК][аА]"
+        }
+      ]
+    },
+    "keyword_date": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[dD][aA][tT][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[дД][аА][тТ][аА]"
+        }
+      ]
+    },
+    "keyword_boolean": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[bB][oO][oO][lL][eE][aA][nN]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[бБ][уУ][лЛ][еЕ][вВ][оО]"
+        }
+      ]
+    },
+    "keyword_cast": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[cC][aA][sS][tT]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[вВ][ыЫ][рР][аА][зЗ][иИ][тТ][ьЬ]"
+        }
+      ]
+    },
     "keyword_select": {
       "type": "CHOICE",
       "members": [
@@ -5424,45 +5705,6 @@
         }
       ]
     },
-    "keyword_undefined": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[uU][nN][dD][eE][fF][iI][nN][eE][dD]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[нН][еЕ][оО][пП][рР][еЕ][дД][еЕ][лЛ][еЕ][нН][оО]"
-        }
-      ]
-    },
-    "keyword_true": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[tT][rR][uU][eE]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[иИ][сС][тТ][иИ][нН][аА]"
-        }
-      ]
-    },
-    "keyword_false": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[fF][aA][lL][sS][eE]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[лЛ][оО][жЖ][ьЬ]"
-        }
-      ]
-    },
     "keyword_as": {
       "type": "CHOICE",
       "members": [
@@ -5473,58 +5715,6 @@
         {
           "type": "PATTERN",
           "value": "[кК][аА][кК]"
-        }
-      ]
-    },
-    "keyword_not": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[nN][oO][tT]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[нН][еЕ]"
-        }
-      ]
-    },
-    "keyword_and": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[aA][nN][dD]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[иИ]"
-        }
-      ]
-    },
-    "keyword_or": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[oO][rR]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[иИ][лЛ][иИ]"
-        }
-      ]
-    },
-    "keyword_in": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[iI][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[вВ]"
         }
       ]
     },
@@ -5749,32 +5939,6 @@
         }
       ]
     },
-    "keyword_on": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[oO][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[пП][оО]"
-        }
-      ]
-    },
-    "keyword_by": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[bB][yY]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[пП][оО]"
-        }
-      ]
-    },
     "keyword_having": {
       "type": "CHOICE",
       "members": [
@@ -5785,19 +5949,6 @@
         {
           "type": "PATTERN",
           "value": "[иИ][мМ][еЕ][юЮ][щЩ][иИ][еЕ]"
-        }
-      ]
-    },
-    "keyword_union": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[uU][nN][iI][oO][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[оО][бБ][ъЪ][еЕ][дД][иИ][нН][иИ][тТ][ьЬ]"
         }
       ]
     },
@@ -5902,45 +6053,6 @@
         {
           "type": "PATTERN",
           "value": "[иИ][нН][дД][еЕ][кК][сС][иИ][рР][оО][вВ][аА][тТ][ьЬ]"
-        }
-      ]
-    },
-    "keyword_cast": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[cC][aA][sS][tT]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[вВ][ыЫ][рР][аА][зЗ][иИ][тТ][ьЬ]"
-        }
-      ]
-    },
-    "keyword_asc": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[aA][sS][cC]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[вВ][оО][зЗ][рР]"
-        }
-      ]
-    },
-    "keyword_desc": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[dD][eE][sS][cC]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[уУ][бБ][ыЫ][вВ]"
         }
       ]
     },
@@ -6282,97 +6394,6 @@
         }
       ]
     },
-    "keyword_number": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[nN][uU][mM][bB][eE][rR]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[чЧ][иИ][сС][лЛ][оО]"
-        }
-      ]
-    },
-    "keyword_string": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[sS][tT][rR][iI][nN][gG]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[сС][тТ][рР][оО][кК][аА]"
-        }
-      ]
-    },
-    "keyword_date": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[dD][aA][tT][eE]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[дД][аА][тТ][аА]"
-        }
-      ]
-    },
-    "keyword_case": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[cC][aA][sS][eE]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[вВ][ыЫ][бБ][оО][рР]"
-        }
-      ]
-    },
-    "keyword_when": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[wW][hH][eE][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[кК][оО][гГ][дД][аА]"
-        }
-      ]
-    },
-    "keyword_then": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[tT][hH][eE][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[тТ][оО][гГ][дД][аА]"
-        }
-      ]
-    },
-    "keyword_else": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[eE][lL][sS][eE]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[иИ][нН][аА][чЧ][еЕ]"
-        }
-      ]
-    },
     "keyword_datetime": {
       "type": "CHOICE",
       "members": [
@@ -6396,19 +6417,6 @@
         {
           "type": "PATTERN",
           "value": "[кК][оО][нН][еЕ][цЦ]"
-        }
-      ]
-    },
-    "keyword_boolean": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[bB][oO][oO][lL][eE][aA][nN]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[бБ][уУ][лЛ][еЕ][вВ][оО]"
         }
       ]
     },
@@ -6489,10 +6497,6 @@
           "value": "[аА][вВ][тТ][оО][нН][оО][мМ][еЕ][рР][зЗ][аА][пП][иИ][сС][иИ]"
         }
       ]
-    },
-    "keyword_null": {
-      "type": "PATTERN",
-      "value": "[nN][uU][lL][lL]"
     },
     "keyword_of": {
       "type": "PATTERN",
