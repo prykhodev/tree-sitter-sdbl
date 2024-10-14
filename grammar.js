@@ -11,8 +11,6 @@ module.exports = grammar({
   ],
 
   conflicts: $ => [
-    // [$.object_reference, $.all_fields],
-    // [$.object_reference],
     [$.between_expression, $.binary_expression],
     [$.function_invocation]
   ],
@@ -557,6 +555,7 @@ module.exports = grammar({
         $.keyword_true,
         $.keyword_false,
         $.keyword_null,
+        $.keyword_undefined,
       ),
     ),
 
@@ -596,19 +595,40 @@ module.exports = grammar({
       $.object_reference,
       '.',
     ),
+    keyword_not: _ => make_keyword_en_ru("not", "не"),
+    keyword_and: _ => make_keyword_en_ru("and", "и"),
+    keyword_or: _ => make_keyword_en_ru("or", "или"),
+    keyword_in: _ => make_keyword_en_ru("in", "в"),
+    keyword_on: _ => make_keyword_en_ru("on", "по"),
+    keyword_by: _ => make_keyword_en_ru("by", "по"),
+    keyword_union: _ => make_keyword_en_ru("union", "объединить"),
+
+    keyword_case: _ => make_keyword_en_ru("case", "выбор"),
+    keyword_when: _ => make_keyword_en_ru("when", "когда"),
+    keyword_then: _ => make_keyword_en_ru("then", "тогда"),
+    keyword_else: _ => make_keyword_en_ru("else", "иначе"),
+
+    keyword_asc: _ => make_keyword_en_ru("asc", "возр"),
+    keyword_desc: _ => make_keyword_en_ru("desc", "убыв"),
+
+    keyword_true: _ => make_keyword_en_ru("true", "истина"),
+    keyword_false: _ => make_keyword_en_ru("false", "ложь"),
+
+    keyword_undefined: _ => make_keyword_en_ru("undefined", "неопределено"),
+    keyword_null: _ => make_keyword("null"),
+
+    keyword_number: _ => make_keyword_en_ru("number", "число"),
+    keyword_string: _ => make_keyword_en_ru("string", "строка"),
+    keyword_date: _ => make_keyword_en_ru("date", "дата"),
+    keyword_boolean: _ => make_keyword_en_ru("boolean", "булево"),
+
+    keyword_cast: _ => make_keyword_en_ru("cast", "выразить"),
 
     keyword_select: _ => make_keyword_en_ru("select", "выбрать"),
     keyword_allowed: _ => make_keyword_en_ru("allowed", "разрешенные"),
     keyword_distinct: _ => make_keyword_en_ru("distinct", "различные"),
     keyword_top: _ => make_keyword_en_ru("top", "первые"),
-    keyword_undefined: _ => make_keyword_en_ru("undefined", "неопределено"),
-    keyword_true: _ => make_keyword_en_ru("true", "истина"),
-    keyword_false: _ => make_keyword_en_ru("false", "ложь"),
     keyword_as: _ => make_keyword_en_ru("as", "как"),
-    keyword_not: _ => make_keyword_en_ru("not", "не"),
-    keyword_and: _ => make_keyword_en_ru("and", "и"),
-    keyword_or: _ => make_keyword_en_ru("or", "или"),
-    keyword_in: _ => make_keyword_en_ru("in", "в"),
     keyword_hierarchy: _ => make_keyword_en_ru("hierarchy", "иерархии"),
     keyword_between: _ => make_keyword_en_ru("between", "между"),
     keyword_is: _ => make_keyword_en_ru("is", "есть"),
@@ -626,10 +646,7 @@ module.exports = grammar({
     keyword_inner: _ => make_keyword_en_ru("inner", "внутреннее"),
     keyword_where: _ => make_keyword_en_ru("where", "где"),
     keyword_group: _ => make_keyword_en_ru("group", "сгруппировать"),
-    keyword_on: _ => make_keyword_en_ru("on", "по"),
-    keyword_by: _ => make_keyword_en_ru("by", "по"),
     keyword_having: _ => make_keyword_en_ru("having", "имеющие"),
-    keyword_union: _ => make_keyword_en_ru("union", "объединить"),
     keyword_all: _ => make_keyword_en_ru("all", "все"),
     keyword_order: _ => make_keyword_en_ru("order", "упорядочить"),
     keyword_autoorder: _ => make_keyword_en_ru("autoorder", "автоупорядочивание"),
@@ -638,9 +655,6 @@ module.exports = grammar({
     keyword_only: _ => make_keyword_en_ru("only", "только"),
     keyword_periods: _ => make_keyword_en_ru("periods", "периодами"),
     keyword_index: _ => make_keyword_en_ru("index", "индексировать"),
-    keyword_cast: _ => make_keyword_en_ru("cast", "выразить"),
-    keyword_asc: _ => make_keyword_en_ru("asc", "возр"),
-    keyword_desc: _ => make_keyword_en_ru("desc", "убыв"),
     keyword_for: _ => make_keyword_en_ru("for", "для"),
     keyword_update: _ => make_keyword_en_ru("update", "изменения"),
     keyword_escape: _ => make_keyword_en_ru("escape", "спецсимвол"),
@@ -667,24 +681,14 @@ module.exports = grammar({
     keyword_presentation: _ => make_keyword_en_ru("presentation", "представление"),
     keyword_refpresentation: _ => make_keyword_en_ru("refpresentation", "представлениессылки"),
     keyword_valuetype: _ => make_keyword_en_ru("valuetype", "типзначения"),
-    keyword_number: _ => make_keyword_en_ru("number", "число"),
-    keyword_string: _ => make_keyword_en_ru("string", "строка"),
-    keyword_date: _ => make_keyword_en_ru("date", "дата"),
-    keyword_case: _ => make_keyword_en_ru("case", "выбор"),
-    keyword_when: _ => make_keyword_en_ru("when", "когда"),
-    keyword_then: _ => make_keyword_en_ru("then", "тогда"),
-    keyword_else: _ => make_keyword_en_ru("else", "иначе"),
     keyword_datetime: _ => make_keyword_en_ru("datetime", "датавремя"),
     keyword_end: _ => make_keyword_en_ru("end", "конец"),
-    keyword_boolean: _ => make_keyword_en_ru("boolean", "булево"),
     keyword_grouping: _ => make_keyword_en_ru("grouping", "группирующим"),
     keyword_substring: _ => make_keyword_en_ru("substring", "подстрока"),
     keyword_sets: _ => make_keyword_en_ru("sets", "наборам"),
     keyword_type: _ => make_keyword_en_ru("type", "тип"),
     keyword_value: _ => make_keyword_en_ru("value", "значение"),
     keyword_recordautonumber: _ => make_keyword_en_ru("recordautonumber", "автономерзаписи"),
-
-    keyword_null: _ => make_keyword("null"),
     keyword_of: _ => make_keyword("of"),
 
     direction: $ => choice($.keyword_desc, $.keyword_asc),
@@ -783,6 +787,7 @@ function function_type($, type, params = ['expression']) {
   if (params.length == 0) {
     return (seq(type, '()'))
   }
+  //TODO add function_invocation or rewrite(!) function_invocation completely
   return function_node(type, choice($.literal, $.field, $.parameter), params)
 }
 

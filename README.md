@@ -5,13 +5,5 @@
 
 ### TODO
 
-- [x] Add HAVING statement
-    - [x] Add tests
-- [x] Add UNION statement
-- [x] Add tests for multiple queries
-- [x] Add FOR UPDATE statement
-    - [x] Add tests
-- [x] Add TOTALS statement
-    - [x] Add tests
 - [ ] Add highlights
 - [ ] Add tests for Cyrillic queries
